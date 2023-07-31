@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { createGlobalStyle } from "styled-components";
+import TodoBackground from "./components/TodoBase";
+import { TodoProvider } from "./context/TodoContext";
+import ButtonContainer from "./components/ButtonContainer";
+
+const BodyStyle = createGlobalStyle`
+body{
+  background: url("https://picsum.photos/1000?blur=1") no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TodoProvider>
+      <BodyStyle />
+      <TodoBackground />
+      <ButtonContainer />
+    </TodoProvider>
   );
 }
 
