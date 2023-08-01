@@ -8,7 +8,7 @@ const Background = styled.div`
   margin: 3rem auto;
   background: #fff;
   border-radius: 15px;
-  box-shadow: 0px 0px 10px #fff;
+  box-shadow: 0px 0px 10px #000;
 `;
 
 const TodoBackground = () => {

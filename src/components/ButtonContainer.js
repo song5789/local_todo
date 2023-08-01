@@ -32,7 +32,7 @@ const MainBtn = styled.div`
   &:hover {
     box-shadow: 0 0 12px #fff;
   }
-  animation: ${HeartBeat} 0.8s ease-out infinite;
+  animation: ${HeartBeat} 2s ease-out infinite;
 
   .btns {
     display: flex;
@@ -75,7 +75,7 @@ const Btns = styled.div`
   }
 `;
 
-export default function ButtonContainer() {
+export default function ButtonContainer({ setIsSave, setSwitchDial }) {
   const [open, setOpen] = useState(false);
   const state = useTodoState();
 
@@ -85,23 +85,31 @@ export default function ButtonContainer() {
 
   const saveOnLocal = () => {
     localStorage.setItem("todoList", JSON.stringify(state, null, 2));
+    setIsSave(true);
+
+    setTimeout(() => {
+      setIsSave(false);
+    }, 1000);
   };
-  const deleteLocalData = () => {
-    localStorage.clear();
+
+  const dialControl = () => {
+    setSwitchDial(true);
   };
   return (
-    <MainBtn onClick={onToggle}>
-      Click!
-      {open && (
-        <div className="btns">
-          <Btns top={"-80%"} onClick={saveOnLocal}>
-            저장
-          </Btns>
-          <Btns top={"-160%"} onClick={deleteLocalData}>
-            삭제
-          </Btns>
-        </div>
-      )}
-    </MainBtn>
+    <>
+      <MainBtn onClick={onToggle}>
+        Menu
+        {open && (
+          <div className="btns">
+            <Btns top={"-80%"} onClick={saveOnLocal}>
+              저장
+            </Btns>
+            <Btns top={"-160%"} onClick={dialControl}>
+              삭제
+            </Btns>
+          </div>
+        )}
+      </MainBtn>
+    </>
   );
 }
