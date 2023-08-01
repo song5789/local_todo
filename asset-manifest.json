@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/local_todo/static/js/main.2fc5bfa8.js",
+    "index.html": "/local_todo/index.html",
+    "main.2fc5bfa8.js.map": "/local_todo/static/js/main.2fc5bfa8.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.2fc5bfa8.js"
+  ]
+}
