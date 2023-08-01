@@ -10,6 +10,9 @@ body{
   background: url("https://picsum.photos/1000?blur=1") no-repeat;
   background-size: cover;
   background-attachment: scroll;
+  margin: 0;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 `;
 

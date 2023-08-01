@@ -5,7 +5,7 @@ import TodoCreate from "./TodoCreate";
 
 const Background = styled.div`
   width: 50%;
-  margin: 3rem auto;
+  margin: 1rem auto;
   background: #fff;
   border-radius: 15px;
   box-shadow: 0px 0px 10px #000;
