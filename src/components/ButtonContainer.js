@@ -18,7 +18,7 @@ const MainBtn = styled.div`
   position: fixed;
   background: #000;
   color: #fff;
-  top: 85%;
+  top: 80%;
   left: 85%;
   cursor: pointer;
   transition: 0.8s;

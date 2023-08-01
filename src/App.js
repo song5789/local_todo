@@ -7,11 +7,10 @@ import DeleteDialog from "./components/DeleteDialog";
 
 const BodyStyle = createGlobalStyle`
 body{
-  background: url("https://picsum.photos/1000?blur=1") no-repeat;
+  background: url("https://picsum.photos/800?blur=1") no-repeat;
   background-size: cover;
-  background-attachment: scroll;
+  background-attachment: fixed;
   margin: 0;
-  padding: 1rem;
   box-sizing: border-box;
 }
 `;
@@ -27,13 +26,19 @@ const fadeInAndOut = keyframes`
 `;
 
 const AlertMsg = styled.div`
-  width: 50%;
+  width: 15%;
   margin: 0 auto;
   text-align: center;
   background: #fff;
-  border-radius: 2px;
-  font-size: 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
   font-weight: 600;
+  position: absolute;
+  top: 50%;
+  right: 4%;
+  transform: translate(-4%, -50%);
 `;
 
 const SaveMessage = styled.div`
