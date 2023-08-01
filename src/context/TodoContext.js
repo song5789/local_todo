@@ -1,12 +1,6 @@
-import { createContext, useContext, useEffect, useReducer, useRef } from "react";
+import { createContext, useContext, useEffect, useReducer, useRef, useState } from "react";
 
-const initialTodos = [
-  {
-    id: new Date().getTime(),
-    text: "테스트용",
-    done: false,
-  },
-];
+const initialTodos = [];
 
 function todoReducer(state, action) {
   switch (action.type) {
@@ -16,10 +10,6 @@ function todoReducer(state, action) {
       return state.map((todo) => (todo.id === action.id ? { ...todo, done: !todo.done } : todo));
     case "REMOVE":
       return state.filter((todo) => todo.id !== action.id);
-    case "LOCAL_SAVE":
-      return localStorage.setItem("todoList", state);
-    case "LOCAL_DELETE":
-      return localStorage.removeItem("todoList");
     default:
       throw new Error(`undefined action : ${action.type}`);
   }
@@ -27,21 +17,18 @@ function todoReducer(state, action) {
 
 const TodoStateContext = createContext();
 const TodoDispatchContext = createContext();
-const TodoIdValueContext = createContext();
+const TodoLocalStateContext = createContext();
 
 export function TodoProvider({ children }) {
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
-  let idValue = useRef(new Date().getTime());
   useEffect(() => {
     if (localStorage.getItem("todoList")) {
-      dispatch({ type: "CREATE", todo: localStorage.getItem("todoList") });
+      dispatch({ type: "CREATE", todo: JSON.parse(localStorage.getItem("todoList")) });
     }
   }, []);
   return (
     <TodoStateContext.Provider value={state}>
-      <TodoDispatchContext.Provider value={dispatch}>
-        <TodoIdValueContext.Provider value={idValue}>{children}</TodoIdValueContext.Provider>
-      </TodoDispatchContext.Provider>
+      <TodoDispatchContext.Provider value={dispatch}>{children}</TodoDispatchContext.Provider>
     </TodoStateContext.Provider>
   );
 }
@@ -54,6 +41,6 @@ export function useTodoDispatch() {
   return useContext(TodoDispatchContext);
 }
 
-export function useTodoIdValue() {
-  return useContext(TodoIdValueContext);
+export function useTodoLocalState() {
+  return useContext(TodoLocalStateContext);
 }

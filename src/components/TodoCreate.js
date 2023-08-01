@@ -1,8 +1,10 @@
 import styled, { css, keyframes } from "styled-components";
 import { MdAdd } from "react-icons/md";
 import { useState } from "react";
+import { useTodoDispatch } from "../context/TodoContext";
 const CretateBackground = styled.div`
   width: 100%;
+  height: 150px;
   padding: 1rem;
   background: #f0eded;
   box-sizing: border-box;
@@ -46,7 +48,7 @@ const Button = styled.div`
       &:active {
         background: #fa5252;
       }
-      transform: translate(-50%, 0%) rotate(45deg);
+      transform: translate(-50%, 135%) rotate(45deg);
     `}
 `;
 
@@ -63,7 +65,7 @@ const SlideUp = keyframes`
 
 const InsertFormPositioner = styled.div`
   width: 100%;
-  bottom: 0;
+  bottom: 0%;
   left: 0;
   position: absolute;
   transiton: 0.125s;
@@ -94,6 +96,26 @@ const Input = styled.input`
 
 export default function TodoCreate() {
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const dispatch = useTodoDispatch();
+
+  const onChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: "CREATE",
+      todo: {
+        id: new Date().getTime(),
+        text: value,
+        done: false,
+      },
+    });
+    setValue("");
+    setOpen(false);
+  };
 
   const onToggle = () => {
     setOpen(!open);
@@ -102,8 +124,8 @@ export default function TodoCreate() {
     <CretateBackground>
       {open && (
         <InsertFormPositioner>
-          <InsertForm>
-            <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요." />
+          <InsertForm onSubmit={onSubmit}>
+            <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요." onChange={onChange} value={value} />
           </InsertForm>
         </InsertFormPositioner>
       )}

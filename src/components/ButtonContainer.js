@@ -1,5 +1,6 @@
 import styled, { css, keyframes } from "styled-components";
 import { useState } from "react";
+import { useTodoDispatch, useTodoLocalState, useTodoState } from "../context/TodoContext";
 
 const HeartBeat = keyframes`
 0%,100%{
@@ -18,7 +19,7 @@ const MainBtn = styled.div`
   background: #000;
   color: #fff;
   top: 85%;
-  left: 93%;
+  left: 85%;
   cursor: pointer;
   transition: 0.8s;
   font-weight: 700;
@@ -76,18 +77,29 @@ const Btns = styled.div`
 
 export default function ButtonContainer() {
   const [open, setOpen] = useState(false);
+  const state = useTodoState();
 
   const onToggle = () => {
     setOpen(!open);
   };
 
+  const saveOnLocal = () => {
+    localStorage.setItem("todoList", JSON.stringify(state, null, 2));
+  };
+  const deleteLocalData = () => {
+    localStorage.clear();
+  };
   return (
     <MainBtn onClick={onToggle}>
       Click!
       {open && (
         <div className="btns">
-          <Btns top={"-80%"}>저장</Btns>
-          <Btns top={"-160%"}>삭제</Btns>
+          <Btns top={"-80%"} onClick={saveOnLocal}>
+            저장
+          </Btns>
+          <Btns top={"-160%"} onClick={deleteLocalData}>
+            삭제
+          </Btns>
         </div>
       )}
     </MainBtn>
