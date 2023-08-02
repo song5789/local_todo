@@ -10,6 +10,8 @@ function todoReducer(state, action) {
       return state.map((todo) => (todo.id === action.id ? { ...todo, done: !todo.done } : todo));
     case "REMOVE":
       return state.filter((todo) => todo.id !== action.id);
+    case "UPDATE":
+      return state.map((todo) => (todo.id === action.id ? { ...todo, ...action.update } : todo));
     default:
       throw new Error(`undefined action : ${action.type}`);
   }

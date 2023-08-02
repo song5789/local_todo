@@ -1,6 +1,7 @@
 import styled, { css, keyframes } from "styled-components";
 import { useState } from "react";
-import { useTodoDispatch, useTodoLocalState, useTodoState } from "../context/TodoContext";
+import { useTodoState } from "../context/TodoContext";
+import { MdSave, MdDelete } from "react-icons/md";
 
 const HeartBeat = keyframes`
 0%,100%{
@@ -57,11 +58,11 @@ const Btns = styled.div`
   height: 70px;
   background: #fff;
   border-radius: 50%;
-  color: #000;
+  color: ${(props) => props.color || "#000"};
   position: absolute;
   top: ${(props) => props.top || "0%"};
   left: 15%;
-  font-size: 1rem;
+  font-size: 1.8rem;
   transiton: 0.3s;
 
   display: flex;
@@ -102,10 +103,10 @@ export default function ButtonContainer({ setIsSave, setSwitchDial }) {
         {open && (
           <div className="btns">
             <Btns top={"-80%"} onClick={saveOnLocal}>
-              저장
+              <MdSave />
             </Btns>
-            <Btns top={"-160%"} onClick={dialControl}>
-              삭제
+            <Btns top={"-160%"} onClick={dialControl} color="#fa2f47">
+              <MdDelete />
             </Btns>
           </div>
         )}

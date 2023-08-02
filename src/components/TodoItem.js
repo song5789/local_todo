@@ -1,14 +1,15 @@
-import React from "react";
+import { useState } from "react";
 import styled, { css } from "styled-components";
-import { MdDone, MdDelete } from "react-icons/md";
+import { MdDone, MdDelete, MdCreate } from "react-icons/md";
 import { useTodoDispatch } from "../context/TodoContext";
+import TodoUpdate from "./TodoUpdate";
 
 const Remove = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   color: #dee2e6;
-  font-size: 24px;
+  font-size: 1.7rem;
   cursor: pointer;
   &:hover {
     color: #ff6b6b;
@@ -16,15 +17,34 @@ const Remove = styled.div`
   display: none;
 `;
 
+const Update = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dee2e6;
+  font-size: 1.7rem;
+  cursor: pointer;
+  &:hover {
+    color: #6284f5;
+  }
+  display: none;
+  margin-right: 1rem;
+`;
+
 const ItemBlock = styled.div`
   display: flex;
   align-items: center;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  position: relative;
+  padding: 12px;
+  border-radius: 12px;
   &:hover {
     ${Remove} {
       display: initial;
     }
+    ${Update} {
+      display: initial;
+    }
+    box-shadow: 0 0 8px #000;
   }
 `;
 
@@ -61,22 +81,31 @@ const Text = styled.div`
 
 export default function TodoItem({ id, done, text }) {
   const dispatch = useTodoDispatch();
-  const onToggle = () => {
+  const [view, setview] = useState(false);
+
+  const toggleDone = () => {
     dispatch({ type: "TOGGLE", id });
   };
   const onRemove = () => {
     dispatch({ type: "REMOVE", id });
   };
+  const toggleUpdate = () => {
+    setview(!view);
+  };
 
   return (
     <ItemBlock>
-      <CheckCircle checkdone={done} onClick={onToggle}>
+      <CheckCircle checkdone={done} onClick={toggleDone}>
         {done && <MdDone />}
       </CheckCircle>
       <Text checkdone={done}>{text}</Text>
+      <Update onClick={toggleUpdate}>
+        <MdCreate />
+      </Update>
       <Remove onClick={onRemove}>
         <MdDelete />
       </Remove>
+      {view && <TodoUpdate id={id} text={text} toggleUpdate={toggleUpdate} />}
     </ItemBlock>
   );
 }
